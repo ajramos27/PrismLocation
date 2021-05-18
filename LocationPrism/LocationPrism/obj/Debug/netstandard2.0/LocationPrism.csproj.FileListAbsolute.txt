@@ -1,0 +1,12 @@
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\bin\Debug\netstandard2.0\LocationPrism.deps.json
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\bin\Debug\netstandard2.0\LocationPrism.dll
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\bin\Debug\netstandard2.0\LocationPrism.pdb
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\LocationPrism.csprojAssemblyReference.cache
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\Views\MainPage.xaml.g.cs
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\LocationPrism.AssemblyInfoInputs.cache
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\LocationPrism.AssemblyInfo.cs
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\LocationPrism.csproj.CoreCompileInputs.cache
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\LocationPrism.dll
+C:\Users\Aaron Jesus\source\repos\LocationPrism\LocationPrism\LocationPrism\obj\Debug\netstandard2.0\LocationPrism.pdb

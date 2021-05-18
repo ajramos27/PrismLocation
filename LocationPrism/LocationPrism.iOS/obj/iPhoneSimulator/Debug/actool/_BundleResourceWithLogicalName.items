@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon20x20@2x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon20x20@2x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon20x20@2x~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon20x20@2x~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon20x20@3x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon20x20@3x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon20x20~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon20x20~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon29x29.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon29x29.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon29x29@2x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon29x29@2x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon29x29@2x~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon29x29@2x~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon29x29@3x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon29x29@3x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon29x29~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon29x29~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon40x40@2x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon40x40@2x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon40x40@2x~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon40x40@2x~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon40x40@3x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon40x40@3x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon40x40~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon40x40~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon50x50@2x~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon50x50@2x~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon50x50~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon50x50~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon57x57.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon57x57.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon57x57@2x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon57x57@2x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon60x60@2x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon60x60@2x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon60x60@3x.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon60x60@3x.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon72x72@2x~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon72x72@2x~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon72x72~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon72x72~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon76x76@2x~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon76x76@2x~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon76x76~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon76x76~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\AppIcon83.5x83.5@2x~ipad.png">
+      <Optimize>false</Optimize>
+      <LogicalName>AppIcon83.5x83.5@2x~ipad.png</LogicalName>
+    </_BundleResourceWithLogicalName>
+    <_BundleResourceWithLogicalName Include="obj\iPhoneSimulator\Debug\actool\bundle\Assets.car">
+      <Optimize>false</Optimize>
+      <LogicalName>Assets.car</LogicalName>
+    </_BundleResourceWithLogicalName>
+  </ItemGroup>
+</Project>
