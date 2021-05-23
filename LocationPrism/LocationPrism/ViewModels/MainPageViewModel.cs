@@ -1,6 +1,4 @@
 ﻿using LocationPrism.Services;
-using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -17,16 +15,18 @@ namespace LocationPrism.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         private ILocationService _locationService;
+        private IApiService _apiService;
 
         public DelegateCommand StartService { get; private set; }
         public DelegateCommand StopService { get; private set; }
 
-        public MainPageViewModel(INavigationService navigationService, ILocationService locationService)
+        public MainPageViewModel(INavigationService navigationService, ILocationService locationService, IApiService apiService )
             : base(navigationService)
         {
             Title = "Main Page";
 
             _locationService = locationService;
+            _apiService = apiService;
 
             StartService = new DelegateCommand(Start);
             StopService = new DelegateCommand(Stop);
@@ -71,9 +71,17 @@ namespace LocationPrism.ViewModels
         {
             //DependencyService.Get<ILocationService>().Start();
             //await StartListening();
+
+            MessagingCenter.Subscribe<Object, Location>(this, "LocationUpdate", (sender, loc) =>
+                {
+                    _apiService.Hello();
+                    Console.WriteLine("Messaging:" + loc.Latitude + "," + loc.Longitude);
+                });
+
             _locationService.Start();
         }
 
+        /*
         async Task StartListening()
         {
             if (CrossGeolocator.Current.IsListening)
@@ -98,6 +106,6 @@ namespace LocationPrism.ViewModels
         private void Current_PositionChanged(object sender, PositionEventArgs e)
         {
             Console.WriteLine(e.Position.Latitude + "," + e.Position.Longitude);
-        }
+        }*/
     }
 }

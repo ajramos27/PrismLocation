@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocationPrism\LocationPrism.csproj">
-      <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
+      <Project>{E4F0D047-C9ED-4A7A-AEA9-5587EC5352E4}</Project>
       <Name>LocationPrism</Name>
     </ProjectReference>
   </ItemGroup>

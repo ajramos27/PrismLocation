@@ -9,6 +9,7 @@ namespace LocationPrism.Services
         public void Hello()
         {
             Console.WriteLine("Hello Aaronchi");
+            
         }
     }
 }
