@@ -10,6 +10,7 @@ namespace LocationPrism.Repositories
     {
         Task Save(Position position);
         Task<List<Position>> GetAll();
+        Task Clear();
     }
 
 }

@@ -42,5 +42,11 @@ namespace LocationPrism.Repositories
 
             return positions;
         }
+
+        public async Task Clear()
+        {
+            await CreateConnection();
+            await connection.DropTableAsync<Position>();
+        }
     }
 }

@@ -21,7 +21,16 @@ namespace LocationPrism.ViewModels
         private IPositionRepository _positionRepository;
         private IApiService _apiService;
 
-        public ObservableCollection<Position> Locations { get; set; }
+        public ObservableCollection<Position> _locations { get; set; }
+        public ObservableCollection<Position> Locations
+        {
+            get { return _locations; }
+            set
+            {
+                _locations = value;
+                RaisePropertyChanged("Locations");
+            }
+        }
 
         public DelegateCommand StartService { get; private set; }
         public DelegateCommand StopService { get; private set; }
@@ -47,6 +56,7 @@ namespace LocationPrism.ViewModels
             await CheckAndRequestLocationPermission();
             List<Position> list = await _positionRepository.GetAll();
 
+            //await _positionRepository.Clear();
             list.ForEach(l => Locations.Add(l));
 
         }
@@ -75,11 +85,6 @@ namespace LocationPrism.ViewModels
             return status;
         }
 
-        private void Stop()
-        {
-            _locationService.Stop();
-        }
-
         private void Start()
         {
             var timer = 10;           
@@ -96,6 +101,10 @@ namespace LocationPrism.ViewModels
                 }
             });
         }
-
+        
+        private void Stop()
+        {
+            _locationService.Stop();
+        }
     }
 }

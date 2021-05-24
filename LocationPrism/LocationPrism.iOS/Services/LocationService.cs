@@ -1,12 +1,8 @@
 ﻿using CoreLocation;
-using Foundation;
+using LocationPrism.Models;
 using LocationPrism.Services;
-using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Essentials;
@@ -17,18 +13,52 @@ namespace LocationPrism.iOS.Services
 {
     class LocationService : ILocationService
     {
-        public async void Start()
+        private CLLocationManager locationManager;
+
+        public CLLocationManager LocMgr
+        {
+            get { return locationManager; }
+        }
+
+        //SERVICE FUNCTIONS
+
+        public void Start(int interval)
         {
 
-            var status = await CheckAndRequestPermissionAsync(new Permissions.LocationAlways());
-            if (status != PermissionStatus.Granted)
+            locationManager = new CLLocationManager();
+            locationManager.PausesLocationUpdatesAutomatically = false;
+
+            locationManager.RequestAlwaysAuthorization();
+            locationManager.AllowsBackgroundLocationUpdates = true;
+
+            if (CLLocationManager.LocationServicesEnabled)
             {
-                // Notify user permission was denied
-                return;
+
+                //set the desired accuracy, in meters
+                locationManager.DesiredAccuracy = CLLocation.AccurracyBestForNavigation;
+                locationManager.DistanceFilter = CLLocationDistance.FilterNone;
+
+
+                var locationDelegate = new MyLocationDelegate();
+                locationManager.Delegate = locationDelegate;
+                locationManager.AllowDeferredLocationUpdatesUntil(CLLocationDistance.MaxDistance, interval);
+
+                locationManager.StartUpdatingLocation();
+                locationManager.StartMonitoringSignificantLocationChanges();
+                //locationDelegate.StartTimer(interval);
             }
-            else
+        }
+
+        public void Stop()
+        {
+            locationManager.StopUpdatingLocation();
+        }
+
+        public void ChangeInterval(int interval)
+        {
+            if(locationManager!= null)
             {
-                StartListening();
+                ((MyLocationDelegate)locationManager.Delegate).ChangeInterval(interval);
             }
         }
 
@@ -42,27 +72,50 @@ namespace LocationPrism.iOS.Services
             }
 
             return status;
-        }
+        }        
+    }
 
-        public void Stop()
+    public class MyLocationDelegate : CLLocationManagerDelegate
+    {
+        private CLLocation lastLoc;
+        private int interval = Timeout.Infinite;
+        private Timer timer;
+
+        public override void LocationsUpdated(CLLocationManager manager, CLLocation[] locations)
         {
-            throw new NotImplementedException();
+
+            var lastLocation = (locations[locations.Length - 1]);
+            Console.WriteLine(lastLocation.Coordinate.Latitude + "," + lastLocation.Coordinate.Longitude);
+            lastLoc = lastLocation;
+            var location = new Position(lastLoc.Coordinate.Latitude, lastLoc.Coordinate.Longitude);
+            MessagingCenter.Send(location, "LocationUpdate");
         }
 
-        async void StartListening()
-        { 
 
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(1);
+        public void StartTimer(int interval)
+        {
+            this.interval = interval;
+            var startTimeSpan = TimeSpan.FromSeconds(interval);
+            var periodTimeSpan = TimeSpan.FromSeconds(interval);
 
-            var timer = new System.Threading.Timer(async (e) =>
+            timer = new Timer(async (e) =>
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
-                var position = await Geolocation.GetLocationAsync(request);
-                Console.WriteLine(position.Longitude + "," + position.Latitude);
-                MessagingCenter.Send<Object, Location>(this, "LocationUpdate", position);
+                await Task.Run(() =>
+                {
+                    Console.WriteLine("Current is: " + lastLoc.Coordinate.Latitude + "," + lastLoc.Coordinate.Longitude);
+                    var location = new Position(lastLoc.Coordinate.Latitude, lastLoc.Coordinate.Longitude);
+                    MessagingCenter.Send(location, "LocationUpdate");
+                });
 
             }, null, startTimeSpan, periodTimeSpan);
         }
+
+        public void ChangeInterval(int interval)
+        {
+            this.interval = interval;
+            timer.Change(TimeSpan.FromSeconds(interval), TimeSpan.FromSeconds(interval));
+        }
+
     }
+
 }

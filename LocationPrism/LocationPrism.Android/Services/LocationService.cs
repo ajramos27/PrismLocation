@@ -85,7 +85,6 @@ namespace LocationPrism.Droid.Services
                 var position = await Geolocation.GetLocationAsync(request);
                 Console.WriteLine("Current is: " + position.Longitude + "," + position.Latitude);
                 var location = new Position(position.Latitude, position.Longitude);
-                var pp = interval;
                 MessagingCenter.Send(location, "LocationUpdate");
                 
 
