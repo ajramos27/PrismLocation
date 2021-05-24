@@ -6,7 +6,8 @@ namespace LocationPrism.Services
 {
     public interface ILocationService
     {
-        void Start();
+        void Start(int interval);
         void Stop();
+        void ChangeInterval(int interval);
     }
 }

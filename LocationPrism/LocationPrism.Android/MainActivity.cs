@@ -3,7 +3,6 @@ using Android.Content.PM;
 using Android.OS;
 using LocationPrism.Droid.Services;
 using LocationPrism.Services;
-using Plugin.CurrentActivity;
 using Prism;
 using Prism.Ioc;
 
@@ -25,7 +24,6 @@ namespace LocationPrism.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             ActivityCurrent = this;
-            CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
             LoadApplication(new App(new AndroidInitializer()));
         }
@@ -33,8 +31,6 @@ namespace LocationPrism.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }

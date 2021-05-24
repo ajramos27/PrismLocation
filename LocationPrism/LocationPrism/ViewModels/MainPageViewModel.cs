@@ -1,9 +1,12 @@
-﻿using LocationPrism.Services;
+﻿using LocationPrism.Models;
+using LocationPrism.Repositories;
+using LocationPrism.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,27 +18,37 @@ namespace LocationPrism.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         private ILocationService _locationService;
+        private IPositionRepository _positionRepository;
         private IApiService _apiService;
+
+        public ObservableCollection<Position> Locations { get; set; }
 
         public DelegateCommand StartService { get; private set; }
         public DelegateCommand StopService { get; private set; }
 
-        public MainPageViewModel(INavigationService navigationService, ILocationService locationService, IApiService apiService )
+        public MainPageViewModel(INavigationService navigationService, ILocationService locationService, IApiService apiService, IPositionRepository positionRepository )
             : base(navigationService)
         {
             Title = "Main Page";
 
             _locationService = locationService;
             _apiService = apiService;
+            _positionRepository = positionRepository;
 
             StartService = new DelegateCommand(Start);
             StopService = new DelegateCommand(Stop);
 
+            Locations = new ObservableCollection<Position>();
+
         }
 
-        public async override void Initialize(INavigationParameters parameters)
+        public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             await CheckAndRequestLocationPermission();
+            List<Position> list = await _positionRepository.GetAll();
+
+            list.ForEach(l => Locations.Add(l));
+
         }
 
         public async Task<PermissionStatus> CheckAndRequestLocationPermission()
@@ -64,48 +77,25 @@ namespace LocationPrism.ViewModels
 
         private void Stop()
         {
-            DependencyService.Get<ILocationService>().Stop();
+            _locationService.Stop();
         }
 
-        private async void Start()
+        private void Start()
         {
-            //DependencyService.Get<ILocationService>().Start();
-            //await StartListening();
-
-            MessagingCenter.Subscribe<Object, Location>(this, "LocationUpdate", (sender, loc) =>
-                {
-                    _apiService.Hello();
-                    Console.WriteLine("Messaging:" + loc.Latitude + "," + loc.Longitude);
-                });
-
-            _locationService.Start();
-        }
-
-        /*
-        async Task StartListening()
-        {
-            if (CrossGeolocator.Current.IsListening)
-                return;
-
-            ///This logic will run on the background automatically on iOS, however for Android and UWP you must put logic in background services. Else if your app is killed the location updates will be killed.
-            await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(1), 10, true, new Plugin.Geolocator.Abstractions.ListenerSettings
+            var timer = 10;           
+            _locationService.Start(timer);
+            MessagingCenter.Subscribe<Position>(this, "LocationUpdate", async (location) =>
             {
-                ActivityType = Plugin.Geolocator.Abstractions.ActivityType.AutomotiveNavigation,
-                AllowBackgroundUpdates = true,
-                DeferLocationUpdates = true,
-                DeferralDistanceMeters = 1,
-                DeferralTime = TimeSpan.FromSeconds(1),
-                ListenForSignificantChanges = false,
-                PauseLocationUpdatesAutomatically = false
+                Console.WriteLine("Hello from shared: " + location.Latitude + ", "+ location.Longitude);
+                await _apiService.UpdateLocation(location);
+                int newTimer = 20;
+                if (newTimer != timer)
+                {
+                    _locationService.ChangeInterval(newTimer);
+                    timer = newTimer;
+                }
             });
-
-            CrossGeolocator.Current.PositionChanged += Current_PositionChanged;
-
         }
 
-        private void Current_PositionChanged(object sender, PositionEventArgs e)
-        {
-            Console.WriteLine(e.Position.Latitude + "," + e.Position.Longitude);
-        }*/
     }
 }

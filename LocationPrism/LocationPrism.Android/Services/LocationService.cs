@@ -2,17 +2,12 @@
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using LocationPrism.Models;
 using LocationPrism.Services;
-using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocationPrism.Droid.Services.LocationService))]
 namespace LocationPrism.Droid.Services
@@ -20,6 +15,10 @@ namespace LocationPrism.Droid.Services
     [Service(ForegroundServiceType = Android.Content.PM.ForegroundService.TypeLocation) ]
     public class LocationService : Service, ILocationService
     {
+
+        private int interval = Timeout.Infinite;
+        private Timer timer;
+
         public override IBinder OnBind(Intent intent)
         {
             return null;
@@ -32,32 +31,28 @@ namespace LocationPrism.Droid.Services
             {
                 System.Diagnostics.Debug.WriteLine("Starting");
                 RegisterNotification();
-
-                var startTimeSpan = TimeSpan.Zero;
-                var periodTimeSpan = TimeSpan.FromSeconds(10);
-
-                var timer = new System.Threading.Timer(async (e) =>
-                {
-                    var request = new GeolocationRequest(GeolocationAccuracy.Medium);
-                    var position = await Geolocation.GetLocationAsync(request);
-                    Console.WriteLine(position.Longitude + "," + position.Latitude);
-
-                }, null, startTimeSpan, periodTimeSpan);
+                StartTimer(intent.GetIntExtra("timer", 0));
 
             } else if (intent.Action == "STOP_SERVICE")
             {
                 System.Diagnostics.Debug.WriteLine("Stopping");
+                StopTimer();
                 StopForeground(true);
                 StopSelfResult(startId);
 
+            } else if (intent.Action == "UPDATE_SERVICE")
+            {
+                System.Diagnostics.Debug.WriteLine("Update");
+                UpdateTimer(intent.GetIntExtra("timer", 0));
             }
 
             return StartCommandResult.NotSticky;
         }
 
-        public void Start()
+        public void Start(int interval)
         {
             Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(LocationService));
+            startService.PutExtra("timer", interval);
             startService.SetAction("START_SERVICE");
             MainActivity.ActivityCurrent.StartService(startService);
         }
@@ -69,13 +64,50 @@ namespace LocationPrism.Droid.Services
             MainActivity.ActivityCurrent.StartService(stopIntent);
         }
 
-        void RegisterNotification()
+        public void ChangeInterval(int interval)
+        {
+            Intent updateIntent = new Intent(MainActivity.ActivityCurrent, this.Class);
+            updateIntent.PutExtra("timer", interval);
+            updateIntent.SetAction("UPDATE_SERVICE");
+            MainActivity.ActivityCurrent.StartService(updateIntent);
+        }
+
+        public void StartTimer(int updateTime)
+        {         
+            var startTime = TimeSpan.Zero;
+            var periodTime = TimeSpan.FromSeconds(updateTime);
+
+            this.interval = updateTime;
+
+            timer = new Timer(async (e) =>
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Default);
+                var position = await Geolocation.GetLocationAsync(request);
+                Console.WriteLine("Current is: " + position.Longitude + "," + position.Latitude);
+                var location = new Position(position.Latitude, position.Longitude);
+                var pp = interval;
+                MessagingCenter.Send(location, "LocationUpdate");
+                
+
+            }, null, startTime, periodTime);
+        }
+      
+        public void StopTimer()
+        {
+            interval = Timeout.Infinite;
+            timer.Change(Timeout.Infinite, Timeout.Infinite);
+        }
+
+        public void UpdateTimer(int interval)
+        {
+            this.interval = interval;
+            timer.Change(TimeSpan.FromSeconds(interval), TimeSpan.FromSeconds(interval));
+        }
+
+        private void RegisterNotification()
         {
             if (Build.VERSION.SdkInt < BuildVersionCodes.O)
             {
-                // Notification channels are new in API 26 (and not a part of the
-                // support library). There is no need to create a notification
-                // channel on older versions of Android.
                 return;
             }
 
@@ -84,15 +116,10 @@ namespace LocationPrism.Droid.Services
 
             manager.CreateNotificationChannel(channel);
 
-            //var intent = new Intent(this, typeof(MainActivity));
-            //intent.AddFlags(ActivityFlags.ClearTop);
-            //var pendingIntent = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.UpdateCurrent);
-            //.SetContentIntent(pendingIntent)
-
             Notification notification = new Notification.Builder(this, "ServiceChannel")
                 .SetContentTitle("Trip in progress")
                 .SetContentText("HaulerHub is tracking your location")
-                .SetSmallIcon(Resource.Drawable.abc_ic_star_black_16dp)
+                .SetSmallIcon(Resource.Drawable.abc_btn_radio_to_on_mtrl_015)
                 .SetOngoing(true)
                 .Build();
 

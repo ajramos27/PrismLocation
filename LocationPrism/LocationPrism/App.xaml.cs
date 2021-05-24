@@ -1,3 +1,4 @@
+using LocationPrism.Repositories;
 using LocationPrism.Services;
 using LocationPrism.ViewModels;
 using LocationPrism.Views;
@@ -30,6 +31,7 @@ namespace LocationPrism
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.Register<IApiService, ApiService>();
+            containerRegistry.Register<IPositionRepository, PositionRepository>();
 
             
         }

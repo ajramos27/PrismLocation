@@ -4,9 +4,21 @@
              x:Class="LocationPrism.Views.MainPage"
              Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+    <StackLayout>
         <Button Text="Start" Command="{Binding StartService}"/>
         <Button Text="Stop" Command="{Binding StopService}"/>
+
+        <CollectionView ItemsSource="{Binding Locations}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding Latitude}"/>
+                        <Label Text="{Binding Longitude}"/>
+                        <Label Text="{Binding Time}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </StackLayout>
 
 </ContentPage>
